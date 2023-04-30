@@ -1,0 +1,5 @@
+// chạy file es6
+
+{
+  "presets": ["env", "stage-0"]
+}
