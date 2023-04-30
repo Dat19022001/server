@@ -10,6 +10,7 @@ const Product = new mongoose.Schema(
     description:{type:String,require:true},
     pageNumber:{type:Number,require:true,integer: true},
     buyNumber:{type:Number,require:true,integer: true},
+    price:{type:Number,require:true,integer:true},
     rate:{type:Number,require:true,float:true},
     comment:[
       {

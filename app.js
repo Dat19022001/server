@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
 import productRoutes from "./routes/products";
+import cartRoutes from "./routes/cart";
 
 dotenv.config();
 const app = express();
@@ -21,6 +22,7 @@ mongoose
 app.use(cors());
 app.use(express.json());
 app.use("/product", productRoutes);
+app.use("/cart", cartRoutes);
 
 app.listen(port, () => {
   console.log("Server is running");
