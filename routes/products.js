@@ -7,21 +7,22 @@ const router = express.Router();
 router.post("", async (req, res) => {
   const newProduct = new Products({
     id: req.body.id,
-    Name: req.body.Name,
+    name: req.body.name,
     author: req.body.author,
     imgUrl: req.body.imgUrl,
     datePublish: req.body.datePublish,
     description: req.body.description,
     pageNumber: req.body.pageNumber,
+    cat: req.body.cat,
     buyNumber: req.body.buyNumber,
-    price:req.body.price,
+    price: req.body.price,
     rate: req.body.rate,
     comment: req.body.comment,
   });
   try {
     if (
       !validator.isEmpty(newProduct.id) &&
-      !validator.isEmpty(newProduct.Name) &&
+      !validator.isEmpty(newProduct.name) &&
       !validator.isEmpty(newProduct.author) &&
       !validator.isEmpty(newProduct.imgUrl) &&
       !validator.isEmpty(newProduct.datePublish) &&
@@ -145,7 +146,11 @@ router.put("", async (req, res) => {
 router.put("/comment", async (req, res) => {
   const newComment = req.body.comment;
   try {
-    if(!validator.isEmpty(newComment.UserId) && !validator.isEmpty(newComment.content) && !validator.isEmpty(newComment.date)){
+    if (
+      !validator.isEmpty(newComment.UserId) &&
+      !validator.isEmpty(newComment.content) &&
+      !validator.isEmpty(newComment.date)
+    ) {
       const updatedComment = await Products.findOneAndUpdate(
         { id: req.body.id },
         { $push: { comment: newComment } },
@@ -165,8 +170,7 @@ router.put("/comment", async (req, res) => {
         };
         res.status(400).json(data);
       }
-    }
-    else{
+    } else {
       const data = {
         Status: 400,
         message: "update thất bại",
@@ -182,35 +186,33 @@ router.put("/comment", async (req, res) => {
   }
 });
 // 6.xóa comment của các sản phẩm
-router.delete("/:productId/comment/:commentId",async (req,res)=>{
-  const {productId,commentId} = req.params
-  try{
+router.delete("/:productId/comment/:commentId", async (req, res) => {
+  const { productId, commentId } = req.params;
+  try {
     const commentProduct = await Products.findOneAndUpdate(
       { id: productId },
       { $pull: { comment: { _id: commentId } } },
       { new: true }
     );
-    if(commentProduct){
+    if (commentProduct) {
       const data = {
-        Status:200,
-        message:"Xóa comment thành công",
-        data1: commentProduct
-      }
-      res.status(200).json(data)
-    }
-    else{
+        Status: 200,
+        message: "Xóa comment thành công",
+        data1: commentProduct,
+      };
+      res.status(200).json(data);
+    } else {
       const data = {
-        Status:400,
-        message:"Xóa comment thất bại"
-      }
-      res.status(400).json(data)
+        Status: 400,
+        message: "Xóa comment thất bại",
+      };
+      res.status(400).json(data);
     }
-  }
-  catch(err){
+  } catch (err) {
     const data = {
-      Status:500,
-      message:"Delete comment thất bại"
-    }
+      Status: 500,
+      message: "Delete comment thất bại",
+    };
   }
-})
+});
 module.exports = router;
