@@ -215,4 +215,65 @@ router.delete("/:productId/comment/:commentId", async (req, res) => {
     };
   }
 });
+// 11. lấy sản Phẩm theo id
+router.get("/:productId", async (req,res)=>{
+  const {productId} = req.params
+  try{
+    const product = await Products.findOne({id:productId})
+    if(product){
+      const data ={
+        Status:200,
+        message:"Thành công",
+        data1: product
+      }
+      res.status(200).json(data)
+    }else{
+      const data ={
+        Status:400,
+        message:"Không có sản phẩm",
+        data1: []
+      }
+      res.status(400).json(data)
+    }
+
+  }catch(err){
+    const data = {
+      Status:500,
+      message:"Sản phẩm không tồn tại",
+      data1:[]
+    }
+    res.status(500).json(data)
+  }
+})
+
+// 12.lấy sản phẩm theo cat
+router.get("/category/:cat",async(req,res)=>{
+  const {cat} = req.params
+  try{
+    const product = await Products.find({"cat.name" :{ $eq: cat }})
+    if(product.length > 0){
+      const data ={
+        Status:200,
+        message:"Thành công",
+        data1: product
+      }
+      res.status(200).json(data)
+    }else{
+      const data ={
+        Status:400,
+        message:"Không có sản phẩm",
+        data1: []
+      }
+      res.status(400).json(data)
+    }
+
+  }catch(err){
+    const data = {
+      Status:500,
+      message:"Sản phẩm không tồn tại",
+      data1:[]
+    }
+    res.status(500).json(data)
+  }
+})
 module.exports = router;
