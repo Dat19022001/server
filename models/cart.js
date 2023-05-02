@@ -9,6 +9,7 @@ const Cart = mongoose.Schema({
       productImg:{type:String,require:true},
       productPrice:{type:Number,require:true,integer:true},
       quantity:{type:Number,require:true,integer:true}
+      
     }
   ]
 },{timestamps:true});
