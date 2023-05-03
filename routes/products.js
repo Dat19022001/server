@@ -1,4 +1,4 @@
-import express from "express";
+import express, { json } from "express";
 const validator = require("validator");
 import Products from "../models/products";
 
@@ -43,7 +43,7 @@ router.post("", async (req, res) => {
       const data = {
         Status: 400,
         message: "Thêm Thất bại",
-        data1: [],
+        data1: {},
       };
       res.status(500).json(data);
     }
@@ -51,7 +51,7 @@ router.post("", async (req, res) => {
     const data = {
       Status: 500,
       message: "Thêm sản phẩm thất bại",
-      data1: [],
+      data1: {},
     };
     res.status(500).json(data);
   }
@@ -71,7 +71,7 @@ router.get("", async (req, res) => {
       const data = {
         Status: 400,
         message: "Không có sản phẩm",
-        data1: [],
+        data1: {},
       };
       res.status(400).json(data);
     }
@@ -79,7 +79,7 @@ router.get("", async (req, res) => {
     const data = {
       Status: 500,
       message: "Không tìm thấy sản phẩm",
-      data1: [],
+      data1: {},
     };
     res.status(500).json(data);
   }
@@ -93,12 +93,14 @@ router.delete("", async (req, res) => {
       const data = {
         Status: 200,
         message: "Xóa Sản Phẩm Thành Công",
+        data1: deletedProduct,
       };
       res.status(200).json(data);
     } else {
       const data = {
         Status: 400,
         message: "Xóa Sản Phẩm Không Thành Công",
+        data1: {},
       };
       res.status(400).json(data);
     }
@@ -106,6 +108,7 @@ router.delete("", async (req, res) => {
     const data = {
       Status: 500,
       message: "Xóa Sản Phẩm Không Thành Công",
+      data1: {},
     };
     res.status(500).json(data);
   }
@@ -129,7 +132,7 @@ router.put("", async (req, res) => {
       const data = {
         Status: 400,
         message: "Update Thất Bại",
-        data1: [],
+        data1: {},
       };
       res.status(400).json(data);
     }
@@ -137,7 +140,7 @@ router.put("", async (req, res) => {
     const data = {
       Status: 500,
       message: "Update Thất Bại",
-      data1: [],
+      data1: {},
     };
     res.status(500).json(data);
   }
@@ -167,6 +170,7 @@ router.put("/comment", async (req, res) => {
         const data = {
           Status: 400,
           message: "Update Thất Bại",
+          data1: {},
         };
         res.status(400).json(data);
       }
@@ -174,6 +178,7 @@ router.put("/comment", async (req, res) => {
       const data = {
         Status: 400,
         message: "update thất bại",
+        data1: {},
       };
       res.status(400).json(data);
     }
@@ -181,6 +186,7 @@ router.put("/comment", async (req, res) => {
     const data = {
       Status: 500,
       message: "update thất bại",
+      data1: {},
     };
     res.status(500).json(data);
   }
@@ -205,6 +211,7 @@ router.delete("/:productId/comment/:commentId", async (req, res) => {
       const data = {
         Status: 400,
         message: "Xóa comment thất bại",
+        data1: {},
       };
       res.status(400).json(data);
     }
@@ -212,68 +219,68 @@ router.delete("/:productId/comment/:commentId", async (req, res) => {
     const data = {
       Status: 500,
       message: "Delete comment thất bại",
+      data1: {},
     };
+    res.status(500).json(data);
   }
 });
 // 11. lấy sản Phẩm theo id
-router.get("/:productId", async (req,res)=>{
-  const {productId} = req.params
-  try{
-    const product = await Products.findOne({id:productId})
-    if(product){
-      const data ={
-        Status:200,
-        message:"Thành công",
-        data1: product
-      }
-      res.status(200).json(data)
-    }else{
-      const data ={
-        Status:400,
-        message:"Không có sản phẩm",
-        data1: []
-      }
-      res.status(400).json(data)
+router.get("/:productId", async (req, res) => {
+  const { productId } = req.params;
+  try {
+    const product = await Products.findOne({ id: productId });
+    if (product) {
+      const data = {
+        Status: 200,
+        message: "Thành công",
+        data1: product,
+      };
+      res.status(200).json(data);
+    } else {
+      const data = {
+        Status: 400,
+        message: "Không có sản phẩm",
+        data1: [],
+      };
+      res.status(400).json(data);
     }
-
-  }catch(err){
+  } catch (err) {
     const data = {
-      Status:500,
-      message:"Sản phẩm không tồn tại",
-      data1:[]
-    }
-    res.status(500).json(data)
+      Status: 500,
+      message: "Sản phẩm không tồn tại",
+      data1: [],
+    };
+    res.status(500).json(data);
   }
-})
+});
 
 // 12.lấy sản phẩm theo cat
-router.get("/category/:cat",async(req,res)=>{
-  const {cat} = req.params
-  try{
-    const product = await Products.find({"cat.name" :{ $eq: cat }})
-    if(product.length > 0){
-      const data ={
-        Status:200,
-        message:"Thành công",
-        data1: product
-      }
-      res.status(200).json(data)
-    }else{
-      const data ={
-        Status:400,
-        message:"Không có sản phẩm",
-        data1: []
-      }
-      res.status(400).json(data)
+router.get("/category/:cat", async (req, res) => {
+  const { cat } = req.params;
+  try {
+    const product = await Products.find({ "cat.name": { $eq: cat } });
+    if (product.length > 0) {
+      const data = {
+        Status: 200,
+        message: "Thành công",
+        data1: product,
+      };
+      res.status(200).json(data);
+    } else {
+      const data = {
+        Status: 400,
+        message: "Không có sản phẩm",
+        data1: {},
+      };
+      res.status(400).json(data);
     }
-
-  }catch(err){
+  } catch (err) {
     const data = {
-      Status:500,
-      message:"Sản phẩm không tồn tại",
-      data1:[]
-    }
-    res.status(500).json(data)
+      Status: 500,
+      message: "Sản phẩm không tồn tại",
+      data1: {},
+    };
+    res.status(500).json(data);
   }
-})
+});
 module.exports = router;

@@ -53,6 +53,7 @@ router.post("", async (req, res) => {
     const data = {
       Status: 500,
       message: "Thêm vào giỏ hàng thất bại",
+      data1: {},
     };
     res.status(500).json(data);
   }
@@ -73,7 +74,7 @@ router.get("/:UserId", async (req, res) => {
       const data = {
         Status: 400,
         message: "Không tìm thấy giỏ hàng",
-        data1: [],
+        data1: {},
       };
       res.status(400).json(data);
     }
@@ -81,7 +82,7 @@ router.get("/:UserId", async (req, res) => {
     const data = {
       Status: 500,
       message: "Thất bại",
-      data1: [],
+      data1: {},
     };
     res.status(500).json(data);
   }
@@ -122,7 +123,7 @@ router.put("", async (req, res) => {
             const data = {
               Status: 400,
               message: "update giỏ hàng không thành công thành công",
-              data1: [],
+              data1: {},
             };
             res.status(200).json(data);
           }
@@ -131,7 +132,7 @@ router.put("", async (req, res) => {
         const data = {
           Status: 400,
           message: "Thất Bại",
-          data1: [],
+          data1: {},
         };
         res.status(400).json(data);
       }
@@ -139,7 +140,7 @@ router.put("", async (req, res) => {
       const data = {
         Status: 500,
         message: "không tìm thấy giỏ hàng",
-        data1: [],
+        data1: {},
       };
       res.status(500).json(data);
     }
@@ -165,12 +166,14 @@ router.delete("", async (req, res) => {
       const data = {
         Status: 200,
         message: "Xóa Thành công",
+        data1: result,
       };
       res.status(200).json(data);
     } else {
       const data = {
         Status: 400,
         message: "Xóa Không Thành công",
+        data1: {},
       };
       res.status(400).json(data);
     }
@@ -178,6 +181,7 @@ router.delete("", async (req, res) => {
     const data = {
       Status: 500,
       message: "Xóa Không Thành công",
+      data1: {},
     };
     res.status(500).json(data);
   }

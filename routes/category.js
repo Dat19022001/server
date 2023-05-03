@@ -26,7 +26,7 @@ router.post("", async (req, res) => {
       const data = {
         Status: 400,
         message: "Thêm Thất bại",
-        data1: [],
+        data1: {},
       };
       res.status(400).json(data);
     }
@@ -34,7 +34,7 @@ router.post("", async (req, res) => {
     const data = {
       Status: 500,
       message: "Thêm category thất bại",
-      data1: [],
+      data1: {},
     };
     res.status(500).json(data);
   }
@@ -55,7 +55,7 @@ router.get("", async (req, res) => {
       const data = {
         Status: 400,
         message: "Không có sản phẩm",
-        data1: [],
+        data1: {},
       };
       res.status(400).json(data);
     }
@@ -63,7 +63,7 @@ router.get("", async (req, res) => {
     const data = {
       Status: 500,
       message: "Không tìm thấy sản phẩm",
-      data1: [],
+      data1: {},
     };
     res.status(500).json(data);
   }
