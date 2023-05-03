@@ -283,4 +283,37 @@ router.get("/category/:cat", async (req, res) => {
     res.status(500).json(data);
   }
 });
+
+// 13.danh gia san pham
+router.put("/rate", async (req, res) => {
+  const { productId, rate } = req.body;
+  try {
+    let product = await Products.findOne({ id: productId });
+    if (product) {
+      product.rate += rate;
+      product.buyNumber += 1;
+      product = await product.save();
+      const data = {
+        Status: 200,
+        message: "danh gia hàng thành công",
+        data1: product,
+      };
+      res.status(200).json(data);
+    } else {
+      const data = {
+        Status: 400,
+        message: "danh gia hàng that bai",
+        data1: {},
+      };
+      res.status(400).json(data);
+    }
+  } catch (err) {
+    const data = {
+      Status: 500,
+      message: "danh gia that thất bại",
+      data1: {},
+    };
+    res.status(500).json(data);
+  }
+});
 module.exports = router;
