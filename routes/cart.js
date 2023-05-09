@@ -62,7 +62,7 @@ router.post("", async (req, res) => {
 router.get("/:UserId", async (req, res) => {
   const { UserId } = req.params;
   try {
-    const carts = await Carts.find({ UserId: UserId });
+    const carts = await Carts.findOne({ UserId: UserId });
     if (carts.length > 0) {
       const data = {
         Status: 200,
